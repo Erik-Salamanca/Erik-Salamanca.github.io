@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Projects — Jordan Ellis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0e0e0e;
+      --surface: #161616;
+      --border: #2a2a2a;
+      --text: #e8e2d9;
+      --muted: #7a7469;
+      --accent: #c8a97e;
+      --accent2: #6b9e8a;
+      --serif: 'Playfair Display', Georgia, serif;
+      --mono: 'DM Mono', 'Courier New', monospace;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 14px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.4rem 3rem;
+      background: rgba(14,14,14,0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    .nav-links { display: flex; gap: 2.4rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      padding-bottom: 2px;
+      border-bottom: 1px solid transparent;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--text);
+      border-bottom-color: var(--accent);
+    }
+
+    /* PAGE HEADER */
+    .page-header {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 8rem 3rem 3rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1rem;
+      opacity: 0;
+      animation: fadeUp 0.5s 0.1s forwards;
+    }
+    .page-header h1 {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1.05;
+      opacity: 0;
+      animation: fadeUp 0.5s 0.25s forwards;
+    }
+    .page-header h1 em { font-style: italic; color: var(--accent); }
+    .page-header p {
+      margin-top: 1rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+      max-width: 500px;
+      line-height: 1.9;
+      opacity: 0;
+      animation: fadeUp 0.5s 0.4s forwards;
+    }
+
+    /* FILTER TAGS */
+    .filters {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 1.8rem 3rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      border-bottom: 1px solid var(--border);
+      opacity: 0;
+      animation: fadeUp 0.5s 0.5s forwards;
+    }
+    .filter-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .filter-btn:hover { border-color: var(--accent2); color: var(--accent2); }
+    .filter-btn.active { border-color: var(--accent); color: var(--accent); background: rgba(200,169,126,0.07); }
+
+    /* PROJECT GRID */
+    .projects-wrap {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3rem;
+    }
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    /* PROJECT CARD */
+    .project-card {
+      background: var(--bg);
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.25s;
+      opacity: 0;
+      animation: fadeUp 0.5s forwards;
+    }
+    .project-card:hover { background: var(--surface); }
+    .project-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0;
+      height: 2px;
+      background: linear-gradient(to right, var(--accent), var(--accent2));
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.35s;
+    }
+    .project-card:hover::before { transform: scaleX(1); }
+
+    /* CARD IMAGE */
+    .card-img {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      background: var(--surface);
+      position: relative;
+      border-bottom: 1px solid var(--border);
+    }
+    .card-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s, opacity 0.3s;
+      opacity: 0.85;
+    }
+    .project-card:hover .card-img img { transform: scale(1.04); opacity: 1; }
+    .card-img-placeholder {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 0.6rem;
+      color: var(--border);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .card-img-placeholder svg { opacity: 0.25; }
+
+    /* CARD BODY */
+    .card-body { padding: 1.6rem 1.8rem 2rem; flex: 1; display: flex; flex-direction: column; }
+    .card-num {
+      font-size: 0.62rem;
+      letter-spacing: 0.12em;
+      color: var(--border);
+      margin-bottom: 0.6rem;
+      transition: color 0.2s;
+    }
+    .project-card:hover .card-num { color: var(--accent); }
+    .card-title {
+      font-family: var(--serif);
+      font-size: 1.3rem;
+      color: var(--text);
+      line-height: 1.2;
+      margin-bottom: 0.75rem;
+    }
+    .card-desc {
+      font-size: 0.76rem;
+      color: var(--muted);
+      line-height: 1.85;
+      flex: 1;
+      margin-bottom: 1.2rem;
+    }
+    .card-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-bottom: 1.2rem; }
+    .card-tag {
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      background: rgba(107,158,138,0.07);
+      border: 1px solid rgba(107,158,138,0.22);
+      padding: 0.18rem 0.5rem;
+    }
+    .card-cta {
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2px;
+      display: inline-block;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .project-card:hover .card-cta { color: var(--accent); border-color: var(--accent); }
+
+    /* staggered entrance */
+    .project-card:nth-child(1) { animation-delay: 0.15s; }
+    .project-card:nth-child(2) { animation-delay: 0.25s; }
+    .project-card:nth-child(3) { animation-delay: 0.35s; }
+    .project-card:nth-child(4) { animation-delay: 0.45s; }
+    .project-card:nth-child(5) { animation-delay: 0.55s; }
+
+    .project-card.hidden { display: none; }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1.1rem 1.5rem; }
+      .page-header { padding: 7rem 1.5rem 2.5rem; }
+      .filters { padding: 1.5rem; }
+      .projects-wrap { padding: 2rem 1.5rem; }
+      .projects-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">J·E</a>
+  <ul class="nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="projects.html" class="active">Projects</a></li>
+  </ul>
+</nav>
+
+<div class="page-header">
+  <p class="eyebrow">Selected Work</p>
+  <h1>Projects &amp; <em>Volunteer Work</em></h1>
+  <p>Engineering, pre-medical research, and software projects. Click any card to read the full write-up.</p>
+</div>
+
+<div class="filters">
+  <button class="filter-btn active" onclick="filterCards('all', this)">All</button>
+  <button class="filter-btn" onclick="filterCards('engineering', this)">Engineering</button>
+  <button class="filter-btn" onclick="filterCards('research', this)">Research</button>
+  <button class="filter-btn" onclick="filterCards('software', this)">Software</button>
+  <button class="filter-btn" onclick="filterCards('design', this)">Design</button>
+</div>
+
+<div class="projects-wrap">
+  <div class="projects-grid">
+
+    <!-- CARD 1 — Replace href with your project file, src with your image -->
+    <a class="project-card" href="Fluid-Mechanical-Dissection.html" data-tags="engineering design">
+      <div class="card-img">
+        <img src="Images/FMD_Overall.png" alt="Overall-Picture-of-Fluid-Mechanical-Device"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="card-img-placeholder">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <path d="M21 15l-5-5L5 21"/>
+          </svg>
+          Add image
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-num">01</div>
+        <div class="card-title">Fluid Mechanical Dissection</div>
+        <p class="card-desc">Python pipeline ingesting sensor-array data from a prosthetic socket, visualizing contact stress in real time and flagging high-risk zones.</p>
+        <div class="card-tags">
+          <span class="card-tag">Mechanical Analysis</span>
+          <span class="card-tag">Engineering Estimates</span>
+        </div>
+        <span class="card-cta">View project →</span>
+      </div>
+    </a>
+
+    <!-- CARD 2 — Replace href with your project file, src with your image -->
+    <a class="project-card" href="project-fea-study.html" data-tags="engineering research">
+      <div class="card-img">
+        <img src="img-fea-study.jpg" alt="Knee Implant FEA Study"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="card-img-placeholder" style="display:none">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <path d="M21 15l-5-5L5 21"/>
+          </svg>
+          Add image
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-num">02</div>
+        <div class="card-title">Knee Implant FEA Study</div>
+        <p class="card-desc">Finite element analysis of a tibial tray under physiological loading. Modeled in SolidWorks, simulated in ANSYS to identify peak stress locations.</p>
+        <div class="card-tags">
+          <span class="card-tag">ANSYS</span>
+          <span class="card-tag">SolidWorks</span>
+          <span class="card-tag">FEA</span>
+          <span class="card-tag">Engineering</span>
+        </div>
+        <span class="card-cta">View project →</span>
+      </div>
+    </a>
+
+    <!-- CARD 3 — Replace href with your project file, src with your image -->
+    <a class="project-card" href="project-mcat-tracker.html" data-tags="software">
+      <div class="card-img">
+        <img src="img-mcat-tracker.jpg" alt="MCAT Score Tracker CLI"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="card-img-placeholder" style="display:none">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <path d="M21 15l-5-5L5 21"/>
+          </svg>
+          Add image
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-num">03</div>
+        <div class="card-title">MCAT Score Tracker CLI</div>
+        <p class="card-desc">Command-line tool for logging and visualizing MCAT practice scores. Generates section-by-section trend plots and flags weak areas. Used by 30+ pre-med students.</p>
+        <div class="card-tags">
+          <span class="card-tag">Python</span>
+          <span class="card-tag">Click</span>
+          <span class="card-tag">Pandas</span>
+          <span class="card-tag">Software</span>
+        </div>
+        <span class="card-cta">View project →</span>
+      </div>
+    </a>
+
+    <!-- CARD 4 — Replace href with your project file, src with your image -->
+    <a class="project-card" href="project-exoskeleton.html" data-tags="engineering design">
+      <div class="card-img">
+        <img src="img-exoskeleton.jpg" alt="Exoskeleton Gait Assist"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="card-img-placeholder" style="display:none">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <path d="M21 15l-5-5L5 21"/>
+          </svg>
+          Add image
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-num">04</div>
+        <div class="card-title">Exoskeleton Gait Assist</div>
+        <p class="card-desc">Led a 4-person ASME team designing a passive lower-limb exoskeleton for elderly users. Presented at regional design competition — 2nd place finish.</p>
+        <div class="card-tags">
+          <span class="card-tag">SolidWorks</span>
+          <span class="card-tag">Prototyping</span>
+          <span class="card-tag">Biomechanics</span>
+          <span class="card-tag">Design</span>
+        </div>
+        <span class="card-cta">View project →</span>
+      </div>
+    </a>
+
+    <!-- CARD 5 — Replace href with your project file, src with your image -->
+    <a class="project-card" href="project-report-tool.html" data-tags="software">
+      <div class="card-img">
+        <img src="img-report-tool.jpg" alt="Med Report Automation Tool"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="card-img-placeholder" style="display:none">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <path d="M21 15l-5-5L5 21"/>
+          </svg>
+          Add image
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-num">05</div>
+        <div class="card-title">Med Report Automation Tool</div>
+        <p class="card-desc">Internal Python script auto-generating ISO 13485-compliant test reports from raw CSV exports during my internship at MedTech Solutions.</p>
+        <div class="card-tags">
+          <span class="card-tag">Python</span>
+          <span class="card-tag">ReportLab</span>
+          <span class="card-tag">ISO 13485</span>
+          <span class="card-tag">Software</span>
+        </div>
+        <span class="card-cta">View project →</span>
+      </div>
+    </a>
+
+    <!-- ADD A NEW PROJECT — copy this block and fill it in
+    <a class="project-card" href="project-new.html" data-tags="engineering">
+      <div class="card-img">
+        <img src="img-new.jpg" alt="New Project"
+             onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+        <div class="card-img-placeholder" style="display:none">
+          <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+            <rect x="3" y="3" width="18" height="18" rx="2"/>
+            <circle cx="8.5" cy="8.5" r="1.5"/>
+            <path d="M21 15l-5-5L5 21"/>
+          </svg>
+          Add image
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-num">06</div>
+        <div class="card-title">New Project Title</div>
+        <p class="card-desc">Short description of the project.</p>
+        <div class="card-tags">
+          <span class="card-tag">Tag One</span>
+          <span class="card-tag">Tag Two</span>
+        </div>
+        <span class="card-cta">View project →</span>
+      </div>
+    </a>
+    -->
+
+  </div>
+</div>
+
+<script>
+  function filterCards(tag, btn) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.project-card').forEach(card => {
+      if (tag === 'all' || card.dataset.tags.includes(tag)) {
+        card.classList.remove('hidden');
+      } else {
+        card.classList.add('hidden');
+      }
+    });
+  }
+</script>
+
+</body>
+</html>

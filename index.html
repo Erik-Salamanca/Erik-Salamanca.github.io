@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio — Erik Salamanca</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0e0e0e;
+      --surface: #161616;
+      --border: #2a2a2a;
+      --text: #e8e2d9;
+      --muted: #7a7469;
+      --accent: #c8a97e;
+      --accent2: #6b9e8a;
+      --serif: 'Playfair Display', Georgia, serif;
+      --mono: 'DM Mono', 'Courier New', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 14px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.4rem 3rem;
+      background: rgba(14,14,14,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.15rem;
+      color: var(--accent);
+      letter-spacing: 0.02em;
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 2.4rem; list-style: none; }
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.78rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+      padding-bottom: 2px;
+      border-bottom: 1px solid transparent;
+    }
+    .nav-links a:hover, .nav-links a.active {
+      color: var(--text);
+      border-bottom-color: var(--accent);
+    }
+
+    /* HOME — two column grid */
+    #home {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 100vh;
+      padding-top: 80px;
+    }
+
+    .home-left {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 6rem 4rem 6rem 5rem;
+      border-right: 1px solid var(--border);
+      position: relative;
+    }
+    .home-left::before {
+      content: '';
+      position: absolute; top: 0; left: 0; bottom: 0; width: 3px;
+      background: linear-gradient(to bottom, transparent, var(--accent), transparent);
+    }
+    .eyebrow {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.4rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.2s forwards;
+    }
+    h1 {
+      font-family: var(--serif);
+      font-size: clamp(3rem, 5vw, 5rem);
+      line-height: 1.05;
+      font-weight: 700;
+      margin-bottom: 0.2rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.35s forwards;
+    }
+    .name-italic {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .tagline {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin: 1.8rem 0 3rem;
+      max-width: 380px;
+      line-height: 1.9;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.5s forwards;
+    }
+    .home-ctas {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.65s forwards;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 1.8rem;
+      font-family: var(--mono);
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+    .btn-primary {
+      background: var(--accent);
+      color: #0e0e0e;
+    }
+    .btn-primary:hover { background: #d9bea0; }
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    .home-right {
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 6rem 5rem 6rem 4rem;
+      gap: 2rem;
+      opacity: 0;
+      animation: fadeIn 0.8s 0.7s forwards;
+    }
+    .stat-block {
+      border-left: 2px solid var(--border);
+      padding-left: 1.4rem;
+      transition: border-color 0.2s;
+    }
+    .stat-block:hover { border-left-color: var(--accent2); }
+    .stat-number {
+      font-family: var(--serif);
+      font-size: 2.4rem;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .stat-label {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+    .skills-grid {
+      display: flex; flex-wrap: wrap; gap: 0.5rem;
+      margin-top: 1rem;
+    }
+    .skill-tag {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 0.3rem 0.75rem;
+      font-size: 0.7rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      transition: all 0.2s;
+    }
+    .skill-tag:hover { border-color: var(--accent2); color: var(--accent2); }
+
+    /* RESUME SECTION */
+    #resume {
+      padding: 7rem 5rem 5rem;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .page-header {
+      margin-bottom: 4rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .page-header .eyebrow { opacity: 1; animation: none; }
+    .page-header h2 {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 4vw, 3.8rem);
+      line-height: 1.1;
+      margin-top: 0.5rem;
+    }
+    .page-header h2 em { font-style: italic; color: var(--accent); }
+
+    .resume-section { margin-bottom: 3.5rem; }
+    .section-title {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      margin-bottom: 1.5rem;
+      display: flex; align-items: center; gap: 1rem;
+    }
+    .section-title::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+    .cv-entry {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.5rem 2rem;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .cv-entry:last-child { border-bottom: none; }
+    .cv-role { font-family: var(--serif); font-size: 1.1rem; color: var(--text); }
+    .cv-company { font-size: 0.78rem; color: var(--accent); margin: 0.2rem 0; }
+    .cv-desc {
+      font-size: 0.8rem;
+      color: var(--muted);
+      line-height: 1.8;
+      grid-column: 1 / -1;
+      margin-top: 0.5rem;
+    }
+    .cv-date {
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      white-space: nowrap;
+      padding-top: 0.3rem;
+    }
+    .cv-bullets { list-style: none; color: var(--muted); font-size: 0.8rem; }
+    .cv-bullets li { padding: 0.2rem 0; padding-left: 1rem; position: relative; }
+    .cv-bullets li::before { content: '—'; position: absolute; left: 0; color: var(--border); }
+
+    .skill-category { margin-bottom: 1.2rem; }
+    .skill-cat-name {
+      font-size: 0.7rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+    .skill-list { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+    .skill-pill {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      padding: 0.25rem 0.7rem;
+      font-size: 0.72rem;
+      color: var(--text);
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      nav { padding: 1.2rem 1.5rem; }
+      #home { grid-template-columns: 1fr; }
+      .home-left { padding: 4rem 1.5rem 2rem; border-right: none; border-bottom: 1px solid var(--border); }
+      .home-right { padding: 2rem 1.5rem 4rem; }
+      #resume { padding: 6rem 1.5rem 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV — all links go to real pages -->
+<nav>
+  <a class="nav-logo" href="index.html">E·S</a>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="projects.html">Projects</a></li>
+  </ul>
+</nav>
+
+<!-- HOME SECTION -->
+<section id="home">
+  <div class="home-left">
+    <p class="eyebrow">Mechanical Engineering · Pre-Medical</p>
+    <h1>Erik<br><span class="name-italic">Salamanca</span></h1>
+    <p class="tagline">
+      Mechanical engineering student on a pre-med track, bridging the gap between
+      biomechanics, clinical science, and software. Building tools that live at the
+      intersection of engineering and medicine.
+    </p>
+    <div class="home-ctas">
+      <!-- Both buttons now link to real pages -->
+      <a href="projects.html" class="btn btn-primary">View Projects</a>
+      <a href="#resume" class="btn btn-outline">View Résumé</a>
+    </div>
+  </div>
+
+  <div class="home-right">
+    <div class="stat-block">
+      <div class="stat-number">3rd</div>
+      <div class="stat-label">Mechanical Engineering Undergraduate</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-number">3.9</div>
+      <div class="stat-label">GPA (Science)</div>
+    </div>
+    <div class="stat-block">
+      <div class="stat-number">8</div>
+      <div class="stat-label">Research & Engineering Projects</div>
+    </div>
+    <div>
+      <div class="stat-label" style="margin-bottom:0.8rem">Core expertise</div>
+      <div class="skills-grid">
+        <span class="skill-tag">Biomechanics</span>
+        <span class="skill-tag">CAD / SolidWorks</span>
+        <span class="skill-tag">Python</span>
+        <span class="skill-tag">MATLAB</span>
+        <span class="skill-tag">JAVA</span>
+        <span class="skill-tag">FEA / ANSYS</span>
+        <span class="skill-tag">Pre-Clinical Research</span>
+        <span class="skill-tag">C++</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- RESUME SECTION -->
+<section id="resume">
+  <div class="page-header">
+    <p class="eyebrow">Curriculum Vitae</p>
+    <h2>Experience &amp;<br><em>Education</em></h2>
+  </div>
+
+  <div class="resume-section">
+    <div class="section-title">Education</div>
+    <div class="cv-entry">
+      <div>
+        <div class="cv-role">B.Sc. Mechanical Engineering</div>
+        <div class="cv-company">State University — Pre-Medical Track</div>
+      </div>
+      <div class="cv-date">2022 — Present</div>
+      <p class="cv-desc">GPA: 3.9 · Relevant coursework: Biomechanics, Thermodynamics, Fluid Mechanics, Differential Equations, Organic Chemistry, Biology, Biochemistry, Physics. Member of the Engineering Pre-Med Society and ASME student chapter.</p>
+    </div>
+  </div>
+
+  <div class="resume-section">
+    <div class="section-title">Research &amp; Experience</div>
+    <div class="cv-entry">
+      <div>
+        <div class="cv-role">Undergraduate Research Assistant</div>
+        <div class="cv-company">Biomedical Devices Lab — State University</div>
+      </div>
+      <div class="cv-date">2023 — Present</div>
+      <ul class="cv-bullets cv-desc">
+        <li>Designed and iterated prosthetic limb socket prototypes using SolidWorks and 3D printing</li>
+        <li>Wrote Python scripts to analyze pressure distribution data from sensor arrays</li>
+        <li>Co-authored a conference poster presented at BMES 2024 Annual Meeting</li>
+      </ul>
+    </div>
+    <div class="cv-entry">
+      <div>
+        <div class="cv-role">Clinical Shadowing — Orthopedic Surgery</div>
+        <div class="cv-company">Regional Medical Center</div>
+      </div>
+      <div class="cv-date">Summer 2023</div>
+      <ul class="cv-bullets cv-desc">
+        <li>Observed 40+ hours of orthopedic surgical procedures and post-op rehabilitation</li>
+        <li>Gained insight into implant mechanics, surgical planning, and patient outcomes</li>
+      </ul>
+    </div>
+    <div class="cv-entry">
+      <div>
+        <div class="cv-role">Engineering Intern</div>
+        <div class="cv-company">MedTech Solutions Inc.</div>
+      </div>
+      <div class="cv-date">Summer 2024</div>
+      <ul class="cv-bullets cv-desc">
+        <li>Assisted in FEA simulations of spinal implant components using ANSYS</li>
+        <li>Developed an internal Python tool to automate test report generation, saving ~4 hrs/week</li>
+        <li>Collaborated with cross-functional teams on ISO 13485-compliant documentation</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="resume-section">
+    <div class="section-title">Skills</div>
+    <div class="skill-category">
+      <div class="skill-cat-name">Engineering &amp; Design</div>
+      <div class="skill-list">
+        <span class="skill-pill">SolidWorks</span>
+        <span class="skill-pill">AutoCAD</span>
+        <span class="skill-pill">ANSYS (FEA)</span>
+        <span class="skill-pill">3D Printing / Prototyping</span>
+        <span class="skill-pill">Biomechanical Analysis</span>
+      </div>
+    </div>
+    <div class="skill-category" style="margin-top:1rem">
+      <div class="skill-cat-name">Programming</div>
+      <div class="skill-list">
+        <span class="skill-pill">Python</span>
+        <span class="skill-pill">MATLAB</span>
+        <span class="skill-pill">C++</span>
+        <span class="skill-pill">R (statistics)</span>
+        <span class="skill-pill">NumPy / Pandas</span>
+        <span class="skill-pill">Git</span>
+      </div>
+    </div>
+    <div class="skill-category" style="margin-top:1rem">
+      <div class="skill-cat-name">Pre-Medical / Science</div>
+      <div class="skill-list">
+        <span class="skill-pill">Anatomy &amp; Physiology</span>
+        <span class="skill-pill">Organic Chemistry</span>
+        <span class="skill-pill">Biochemistry</span>
+        <span class="skill-pill">Clinical Research Methods</span>
+        <span class="skill-pill">Medical Terminology</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="resume-section">
+    <div class="section-title">Activities &amp; Honors</div>
+    <div class="cv-entry">
+      <div>
+        <div class="cv-role">Dean's List</div>
+        <div class="cv-company">State University</div>
+      </div>
+      <div class="cv-date">2022 — Present</div>
+    </div>
+    <div class="cv-entry">
+      <div>
+        <div class="cv-role">ASME Student Chapter — Project Lead</div>
+        <div class="cv-company">American Society of Mechanical Engineers</div>
+      </div>
+      <div class="cv-date">2023 — Present</div>
+    </div>
+    <div class="cv-entry">
+      <div>
+        <div class="cv-role">Medical Volunteer</div>
+        <div class="cv-company">Community Free Clinic</div>
+      </div>
+      <div class="cv-date">2023 — Present</div>
+    </div>
+  </div>
+</section>
+
+</body>
+</html>
