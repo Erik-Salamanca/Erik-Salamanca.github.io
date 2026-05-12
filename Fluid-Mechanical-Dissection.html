@@ -1,10 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']]
+      }
+    };
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>PROJECT NAME — Erik Salamanca</title>
+  <title>Fluid Mechanical Dissection — Erik Salamanca</title>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -340,8 +348,8 @@
 
 <!-- NAV -->
 <nav>
-  <a class="nav-logo" href="index.html">J·E</a>
-  <a class="nav-back" href="index.html">Back to Portfolio</a>
+  <a class="nav-logo" href="index.html">E·S</a>
+  <a class="nav-back" href="projects.html">Back to Projects</a>
 </nav>
 
 <!-- HERO IMAGE
@@ -350,7 +358,7 @@
      The placeholder shows automatically if the image fails to load.
 -->
 <div class="hero">
-  <img src="YOUR-HERO-IMAGE.jpg" alt="Project hero image"
+  <img src="../Images/FMD_Overall.png" alt="Overall veiw of coffee maker"
        onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
   <div class="hero-placeholder" style="display:none">
     <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
@@ -369,31 +377,26 @@
   <div class="proj-meta">
     <!-- Add/remove/rename tags to match your project -->
     <span class="proj-tag">Mechanical Engineering</span>
-    <span class="proj-tag">Python</span>
-    <span class="proj-tag">Research</span>
-    <span class="proj-date">Month Year</span>
+    <span class="proj-tag">Dissection</span>
+    <span class="proj-date">November, 2025</span>
   </div>
 
-  <h1 class="proj-title">Your Project <em>Title Here</em></h1>
+  <h1 class="proj-title"><em>Fluid Mechanical Dissection</em></h1>
 
   <p class="proj-subtitle">
-    A one or two sentence summary of what this project is and why it matters.
-    Keep it punchy — this is the hook that makes someone want to keep reading.
+    This is an investigative study into who a fluid mechanical device work as part of a fluid dynamics course at Cornell University. I will be
+    applying knowledge I have learned in the course to a real system to describe how it works. 
   </p>
 
   <!-- QUICK STATS — edit or remove cells as needed -->
   <div class="proj-stats">
     <div class="proj-stat">
       <div class="proj-stat-label">Role</div>
-      <div class="proj-stat-value">Lead Designer</div>
+      <div class="proj-stat-value">Dissector</div>
     </div>
     <div class="proj-stat">
       <div class="proj-stat-label">Duration</div>
-      <div class="proj-stat-value">3 months</div>
-    </div>
-    <div class="proj-stat">
-      <div class="proj-stat-label">Tools</div>
-      <div class="proj-stat-value">SolidWorks, Python</div>
+      <div class="proj-stat-value">2 weeks</div>
     </div>
     <div class="proj-stat">
       <div class="proj-stat-label">Status</div>
@@ -406,93 +409,84 @@
 
   <div class="proj-body">
     <p>
-      Write your project overview here. Describe the problem you were solving,
-      the context it came from, and why it was worth pursuing.
-      <strong>Bold key terms or findings</strong> to help readers scan quickly.
+      For <strong> MAE 3230 Fluid Dynamics</strong> at Cornell University we organized into groups and were given a fluid mechanical device to investigate. 
+      Our group was given a Kurig coffee maker seen in the header image. After dissection we found that the system was compossed of 3 major components.
     </p>
     <p>
-      Add a second paragraph for more context — background research, inspiration,
-      or the constraints you were working within.
+      These components were a <strong> reciprocating pump </strong>, <strong> heating container</strong>, and <strong> syphon.</strong> I will go into more detail in how
+      each of these systems come together to make the Kurig function as a complete unit.
     </p>
   </div>
 
   <!-- SINGLE FULL-WIDTH IMAGE -->
-  <div class="img-block">
-    <img src="YOUR-IMAGE-1.jpg" alt="Description of image"
-         onerror="this.style.height='180px'; this.style.background='#161616';" />
-    <div class="img-caption">Fig. 1 — Caption describing what is shown in this image.</div>
+  <div class="img-grid-3">
+    <div class="img-cell">
+      <img src="Images/FMD_Pump_Whole.png" alt="Description"
+           onerror="this.style.height='180px'; this.style.background='#161616';" />
+      <div class="img-caption">Fig. 1a — Photo of pump that would push air to add pressure on one side of syphon.</div>
+    </div>
+    <div class="img-cell">
+      <img src="Images/FMD_Pump_In.png" alt="Description"
+           onerror="this.style.height='180px'; this.style.background='#1e1e1e';" />
+      <div class="img-caption">Fig. 1b — Photo of storage area where water was heated and pressure was build.</div>
+    </div>
+    <div class="img-cell">
+      <img src="Images/FMD_Syphon.jpeg" alt="Description"
+           onerror="this.style.height='180px'; this.style.background='#161616';" />
+      <div class="img-caption">Fig. 1c — Sketch of syphon system as real system could not be easily photographed while keeping structure intact.</div>
+    </div>
   </div>
-
-  <!-- SECTION: APPROACH -->
-  <div class="divider"><span class="divider-label">Approach</span><div class="divider-line"></div></div>
 
   <div class="proj-body">
     <p>
-      Explain your methodology here. How did you break down the problem?
-      What decisions did you make and why? This is a good place to show
-      your engineering or scientific thinking.
+      Starting with the reciprocating pump it pull air form the outside atmosphere through a one way value in the backward stroke of the pump. The valves work by having a ball cover a hole, 
+      when pressure is low on one side the ball is pushed out of the way and fluid can flow to the area of low pressure. When the pressure is high the ball moves into the hole and not fluid can flow.
+      Figure 2 seen below provides a visual sketch of the system. It then pushes the air through another one way value to the heating container. This will cause a building of pressure on one side of the heating conatiner. The valves work by having a ball cover a hole, 
+      when pressure is low on one side the ball is pushed out of the way and fluid can flow to the area of low pressure. 
+    </p>
+  </div>
+  
+  <div class="img-block">
+    <img src="Images/FMD_Valve_Example.png" alt="Description of image"
+         onerror="this.style.height='180px'; this.style.background='#161616';" />
+    <div class="img-caption">Fig. 2 — Image of the valve system that will move when pressure is low on one side.</div>
+  </div>
+
+  <div class="proj-body">
+    <p>
+      The next topic of discussion is the heating container. This serves 3 purposes, the first is simply to hold an adequte amount of water to fill a coffee cup.
+      The second is that the water is heating so that the coffee will be hot and able to absorb the caffine. The thrid and final is to provide a sealed space that can be 
+      pressurized to raise the fuild level in the next section the syphon.
+    </p>
+
+    <p>
+      The syphon might be more accurately called a manometer at first as it does not initally act as a syphon. Instead, it simpily creates a height difference in the water based on
+      the pressure in the heating container. However, once the water reaches a certain height it will be able to flow down to a region of lower potential energy. This will pull
+      water behind it along creating a syphon.
     </p>
   </div>
 
   <!-- CALLOUT BOX — highlight a key insight or finding -->
   <div class="callout">
-    Key insight or important result goes here. Use this box to highlight
-    something you want to make sure the reader notices — a finding, a
-    design decision, or a constraint that shaped everything else.
+      The overall system works as a manometer where the pressure of one side, in the heating container, can vary using the reciprocating pump. This will cause the fluid to reach a 
+      certain height where it will then become a syphon needing less pressure from the pump.
   </div>
 
   <div class="proj-body">
     <p>
-      Continue explaining your process here. Add as many paragraphs as needed.
+      To figure out the pressure inside the heating container nesscary to start the syphoning pull we can use the hydrostatic equation: \( \Delta P = \rho g \Delta H \). Estimating the height difference between the 
+      top of the fluid in the heating container and the top of the syphon to be 2 cm we can use the known fluid properties of water at 90 degrees celsius, the typical temperature at 
+      which to brew coffee, and the gravitional constant to calculate the pressure difference between the inside of the heating conatiner and the external environment. This gives 
+      us the following properties:
+      \[\Delta H = 0.02\, \text{m}\]
+      \[\rho \big|_{T = 90^\circ C} = 965.3 \frac{kg}{m^3} \]
+      \[g = 9.81 \frac{m}{s^2} \]
+      Thus we can write the equation:
+      \[
+      \Delta P = 965.3 \times 9.81 \times 0.02
+      \]
+      This gives that \( \Delta P = )
     </p>
-  </div>
-
-  <!-- TWO IMAGES SIDE BY SIDE -->
-  <div class="img-grid-2">
-    <div class="img-cell">
-      <img src="YOUR-IMAGE-2A.jpg" alt="Description"
-           onerror="this.style.height='200px'; this.style.background='#1e1e1e';" />
-      <div class="img-caption">Fig. 2a — Caption for left image.</div>
-    </div>
-    <div class="img-cell">
-      <img src="YOUR-IMAGE-2B.jpg" alt="Description"
-           onerror="this.style.height='200px'; this.style.background='#1e1e1e';" />
-      <div class="img-caption">Fig. 2b — Caption for right image.</div>
-    </div>
-  </div>
-
-  <!-- SECTION: RESULTS -->
-  <div class="divider"><span class="divider-label">Results</span><div class="divider-line"></div></div>
-
-  <div class="proj-body">
-    <p>
-      Describe your results and outcomes. Be specific — numbers, comparisons,
-      and concrete takeaways are more compelling than vague claims.
-    </p>
-  </div>
-
-  <!-- BULLET LIST — key outcomes or findings -->
-  <ul class="proj-list">
-    <li><strong>Result one:</strong> describe the specific outcome or finding here.</li>
-    <li><strong>Result two:</strong> another key result with specific detail.</li>
-    <li><strong>Result three:</strong> a third takeaway, lesson learned, or metric.</li>
-    <li><strong>Result four:</strong> add or remove list items as needed.</li>
-  </ul>
-
-  <!-- THREE IMAGES IN A ROW — good for process shots or iterations -->
-  <div class="img-grid-3">
-    <div class="img-cell">
-      <img src="YOUR-IMAGE-3A.jpg" alt="Description"
-           onerror="this.style.height='180px'; this.style.background='#161616';" />
-    </div>
-    <div class="img-cell">
-      <img src="YOUR-IMAGE-3B.jpg" alt="Description"
-           onerror="this.style.height='180px'; this.style.background='#1e1e1e';" />
-    </div>
-    <div class="img-cell">
-      <img src="YOUR-IMAGE-3C.jpg" alt="Description"
-           onerror="this.style.height='180px'; this.style.background='#161616';" />
-    </div>
   </div>
 
   <!-- SECTION: REFLECTION -->
@@ -505,22 +499,3 @@
       employers, and admissions committees alike.
     </p>
   </div>
-
-  <!-- GREEN CALLOUT — for future work or next steps -->
-  <div class="callout green">
-    Future work / next steps: describe where this project could go next,
-    what improvements you'd make, or how it connects to your broader goals
-    in engineering or medicine.
-  </div>
-
-  <!-- CTA BUTTONS — link to GitHub, report, presentation, etc. -->
-  <div class="proj-links">
-    <a href="#" class="btn btn-primary">View on GitHub</a>
-    <a href="#" class="btn btn-outline">Download Report</a>
-    <a href="#" class="btn btn-outline">View Presentation</a>
-  </div>
-
-</div><!-- end .content -->
-
-</body>
-</html>
