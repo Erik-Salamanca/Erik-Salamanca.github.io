@@ -520,6 +520,38 @@
     <a href="#" class="btn btn-outline">View Presentation</a>
   </div>
 
+  <div id="pdf-viewer" style="margin-top: 3rem; border: 1px solid var(--border);">
+  <div style="
+    padding: 0.75rem 1rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  ">
+    <span>Project Report</span>
+    <a href="files/your-report.pdf" download class="btn btn-outline"
+       style="padding: 0.3rem 0.9rem; font-size: 0.65rem;">
+      Download ↓
+    </a>
+  </div>
+  <iframe
+    src="files/your-report.pdf"
+    width="100%"
+    height="800px"
+    style="display: block; border: none; background: var(--surface);"
+  >
+    <p style="padding:1rem; color: var(--muted); font-size:0.8rem;">
+      Your browser can't display this PDF.
+      <a href="files/your-report.pdf" download style="color: var(--accent);">Click here to download it instead.</a>
+    </p>
+  </iframe>
+</div>
+
 </div><!-- end .content -->
 
 </body>

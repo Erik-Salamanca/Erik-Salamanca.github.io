@@ -316,6 +316,8 @@
     }
     .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
 
+
+    
     /* ANIMATIONS */
     @keyframes fadeUp {
       from { opacity: 0; transform: translateY(16px); }
@@ -377,8 +379,7 @@
   <h1 class="proj-title">Mechatronics Robot Design <em></em></h1>
 
   <p class="proj-subtitle">
-    A one or two sentence summary of what this project is and why it matters.
-    Keep it punchy — this is the hook that makes someone want to keep reading.
+    In MAE 3780 Mechatronics our final project was to create a robot that would compete against our classmates in a cube collecting competition.
   </p>
 
   <!-- QUICK STATS — edit or remove cells as needed -->
@@ -406,120 +407,144 @@
 
   <div class="proj-body">
     <p>
-      Write your project overview here. Describe the problem you were solving,
-      the context it came from, and why it was worth pursuing.
-      <strong>Bold key terms or findings</strong> to help readers scan quickly.
+      The competition was to collect as many of the 20 randomly scattered cubes as possible. These cubes would start in the middlish
+      on either side of the blue and yellow color border. To count as acquired the cube had to be fully inside of the robot perimeter. The Starting
+      configuration was a 8 inch square and the robot could extend out into a 12 inch cylinder after the match had started. An image of the field can be 
+      seen below in Figure 1. 
     </p>
     <p>
-      Add a second paragraph for more context — background research, inspiration,
-      or the constraints you were working within.
+      For the competition we were given a frame, continous servo motors, H-bridges, rotational servo motor, color sensor, and two QTI sensors. We were also
+      given a $40 budget that we could send on additional lab equipment or at specific online venders. In addition, we were able to use any 
+      equipment in our lab kits given to use at the begining of the semester. This included wires, resistors, capacitors, buttons, switches, and 1 Arduino Uno.
     </p>
   </div>
 
   <!-- SINGLE FULL-WIDTH IMAGE -->
   <div class="img-block">
-    <img src="YOUR-IMAGE-1.jpg" alt="Description of image"
+    <img src="../Images/Mech-Comp-Field.png" alt="Description of image"
          onerror="this.style.height='180px'; this.style.background='#161616';" />
-    <div class="img-caption">Fig. 1 — Caption describing what is shown in this image.</div>
+    <div class="img-caption">Fig. 1 — Here is the field we would be competing on. Our robot would start on either the yellow or blue side (randomly decided at the 
+      start of each match) and have to collect the cubes in the middle of field. 
+    </div>
   </div>
 
   <!-- SECTION: APPROACH -->
-  <div class="divider"><span class="divider-label">Approach</span><div class="divider-line"></div></div>
+  <div class="divider"><span class="divider-label">Contributions</span><div class="divider-line"></div></div>
 
   <div class="proj-body">
     <p>
-      Explain your methodology here. How did you break down the problem?
-      What decisions did you make and why? This is a good place to show
-      your engineering or scientific thinking.
+      Our robots strategy was drive at an angle until we reached the color border between blue and yellow. The robot would then turn right until it 
+      was parallel with the color border where it would then drive stright along the border. It would have a funnel in the front to acquire cubes it 
+      ran into along the border until it reached the right black border. There it would simiply start driving around randomly staying with in the black border trying to 
+      acquire any cube that got knocked around by chance. It would do this until the match ended. 
     </p>
-  </div>
-
-  <!-- CALLOUT BOX — highlight a key insight or finding -->
-  <div class="callout">
-    Key insight or important result goes here. Use this box to highlight
-    something you want to make sure the reader notices — a finding, a
-    design decision, or a constraint that shaped everything else.
   </div>
 
   <div class="proj-body">
     <p>
-      Continue explaining your process here. Add as many paragraphs as needed.
+      My major contribution to this project was making all the parts and getting them ordered and manufactored using CAD. I would model all the parts 
+      that were needed and making drawinging of them to be laser cut or STL files to be 3D printed. I would then sumbit the orders to RPL lab so they would have the 
+      files and I would be able to get them laser cut or printed when I went to open hours. Seen in Figure 2 is a 3D rendering of the robot based on the CAD model.
     </p>
   </div>
 
-  <!-- TWO IMAGES SIDE BY SIDE -->
-  <div class="img-grid-2">
-    <div class="img-cell">
-      <img src="YOUR-IMAGE-2A.jpg" alt="Description"
-           onerror="this.style.height='200px'; this.style.background='#1e1e1e';" />
-      <div class="img-caption">Fig. 2a — Caption for left image.</div>
+  <!-- SINGLE FULL-WIDTH IMAGE -->
+  <div class="img-block">
+    <img src="../Images/Mech-CAD-Render.png" alt="Description of image"
+         onerror="this.style.height='180px'; this.style.background='#161616';" />
+    <div class="img-caption">Fig. 1 — This is a rendering of the CAD work I did for the robot. Not depicted is the breadboard used to wire the electronics
+      and the two batteries used to power the ardiuno and motors. 
     </div>
-    <div class="img-cell">
-      <img src="YOUR-IMAGE-2B.jpg" alt="Description"
-           onerror="this.style.height='200px'; this.style.background='#1e1e1e';" />
-      <div class="img-caption">Fig. 2b — Caption for right image.</div>
+  </div>
+
+    <div class="proj-body">
+    <p>
+      I also helped with writing the assembly of the robot and coding the major functions. For the code we were restricted to using arduino registers only
+      (no arduino libraries except for a few functions). My major contributes to the code where the intial writing on the drive functions, which later where modified as 
+      different arduino pins where used, and helping debug code after it was written. This inclued looking a code that wasn't working properly with fresh eyes to try to catch
+      errors that the intial teammember missed. I have inclued a PDF file of the code that was used at the end of this page. Each section of the script is commented with 
+      its purpose. 
+    </p>
+  </div>
+
+  <div class="proj-body">
+    <p>
+      The wiring of the robot was mainly done by another teammember, but I did help and have a good understanding of the the worbot is wired. I have made a circuit 
+      diagram of the robots wiring, which can be seen in Figure 3 below.
+    </p>
+  </div>
+
+    <!-- SINGLE FULL-WIDTH IMAGE -->
+  <div class="img-block">
+    <img src="../Images/Mech-Electrical-Diagram.png" alt="Description of image"
+         onerror="this.style.height='180px'; this.style.background='#161616';" />
+    <div class="img-caption">Fig. 1 — This is the electrical diagram of the robot. The L9110 are H-bridges which are externally wired by us connect to 2 motors. 
+      There are also 2 QTI sensor for detecting the black border which use external 10K Ohm resistors. The color sensor is the last component and is used for detecting the 
+      color difference between yellow and blue.
     </div>
   </div>
 
   <!-- SECTION: RESULTS -->
-  <div class="divider"><span class="divider-label">Results</span><div class="divider-line"></div></div>
+  <div class="divider"><span class="divider-label">Performance</span><div class="divider-line"></div></div>
 
   <div class="proj-body">
     <p>
-      Describe your results and outcomes. Be specific — numbers, comparisons,
-      and concrete takeaways are more compelling than vague claims.
+      Our robot ran into some issues on competiton day. One issue was that although we could acquire a good amount of cubes at the start 
+      holding onto them was more difficult. As the robot turned it would lose cubes it had acquired. Additionally the board had a lip just beyond
+      the black border. The board we had practiced on did not have this lip and it resulted in us getting stuck about halfway through every match. We would 
+      also loose cubes to this edge as they would fall off the border and not be in our robot anymore. 
+    </p>
+    <p>
+      We did still win some matches, but many of them we would be winning then lose the cubes we had driving around and get stuck on the edge of the board.
+      Some changes I would make to our robot if I could redesign it now we would be:
     </p>
   </div>
 
   <!-- BULLET LIST — key outcomes or findings -->
   <ul class="proj-list">
-    <li><strong>Result one:</strong> describe the specific outcome or finding here.</li>
-    <li><strong>Result two:</strong> another key result with specific detail.</li>
-    <li><strong>Result three:</strong> a third takeaway, lesson learned, or metric.</li>
-    <li><strong>Result four:</strong> add or remove list items as needed.</li>
+    <li><strong>Change one:</strong> Make the robot stop and backup at the black border to avoid falling off.</li>
+    <li><strong>Change two:</strong> Have front of funnel close as to not lose cubes when backing up or turning.</li>
+    <li><strong>Change three:</strong> Have the robot stop after reaching the edge of the board a certain number of times (maybe only 2-3).</li>
   </ul>
-
-  <!-- THREE IMAGES IN A ROW — good for process shots or iterations -->
-  <div class="img-grid-3">
-    <div class="img-cell">
-      <img src="YOUR-IMAGE-3A.jpg" alt="Description"
-           onerror="this.style.height='180px'; this.style.background='#161616';" />
-    </div>
-    <div class="img-cell">
-      <img src="YOUR-IMAGE-3B.jpg" alt="Description"
-           onerror="this.style.height='180px'; this.style.background='#1e1e1e';" />
-    </div>
-    <div class="img-cell">
-      <img src="YOUR-IMAGE-3C.jpg" alt="Description"
-           onerror="this.style.height='180px'; this.style.background='#161616';" />
-    </div>
-  </div>
-
-  <!-- SECTION: REFLECTION -->
-  <div class="divider"><span class="divider-label">Reflection</span><div class="divider-line"></div></div>
 
   <div class="proj-body">
     <p>
-      What did you learn? What would you do differently? This section shows
-      self-awareness and growth — qualities that matter to research advisors,
-      employers, and admissions committees alike.
+      I think just these three changes would have really improved our robot and the number of matches we would be able 
+      to win.
     </p>
   </div>
 
-  <!-- GREEN CALLOUT — for future work or next steps -->
-  <div class="callout green">
-    Future work / next steps: describe where this project could go next,
-    what improvements you'd make, or how it connects to your broader goals
-    in engineering or medicine.
+  <div id="pdf-viewer" style="margin-top: 3rem; border: 1px solid var(--border);">
+  <div style="
+    padding: 0.75rem 1rem;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent2);
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  ">
+    <span>Robot Code</span>
+    <a href="../PDF's/Mech-Robot-Code.pdf" download class="btn btn-outline"
+       style="padding: 0.3rem 0.9rem; font-size: 0.65rem;">
+      Download ↓
+    </a>
   </div>
-
-  <!-- CTA BUTTONS — link to GitHub, report, presentation, etc. -->
-  <div class="proj-links">
-    <a href="#" class="btn btn-primary">View on GitHub</a>
-    <a href="#" class="btn btn-outline">Download Report</a>
-    <a href="#" class="btn btn-outline">View Presentation</a>
-  </div>
-
+  <iframe
+    src="../PDF's/Mech-Robot-Code.pdf"
+    width="100%"
+    height="800px"
+    style="display: block; border: none; background: var(--surface);"
+  >
+    <p style="padding:1rem; color: var(--muted); font-size:0.8rem;">
+      Your browser can't display this PDF.
+      <a href="../PDF's/Mech-Robot-Code.pdf" download style="color: var(--accent);">Click here to download it instead.</a>
+    </p>
+  </iframe>
+</div>
 </div><!-- end .content -->
 
 </body>
