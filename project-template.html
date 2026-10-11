@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']]
+      }
+    };
+  </script>
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -10,14 +18,14 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0e0e0e;
-      --surface: #161616;
-      --surface2: #1e1e1e;
-      --border: #2a2a2a;
-      --text: #e8e2d9;
-      --muted: #7a7469;
-      --accent: #c8a97e;
-      --accent2: #6b9e8a;
+      --bg: #f5f6fa;
+      --surface: #ffffff;
+      --surface2: #ecebfa;
+      --border: #d9dbe8;
+      --text: #14151f;
+      --muted: #5a5d73;
+      --accent: #2f5bea;
+      --accent2: #e0583f;
       --serif: 'Playfair Display', Georgia, serif;
       --mono: 'DM Mono', 'Courier New', monospace;
       --max: 860px;
@@ -36,7 +44,7 @@
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
       padding: 1.4rem 3rem;
-      background: rgba(14,14,14,0.88);
+      background: rgba(245,246,250,0.88);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
     }
