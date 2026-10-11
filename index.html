@@ -10,13 +10,14 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #0e0e0e;
-      --surface: #161616;
-      --border: #2a2a2a;
-      --text: #e8e2d9;
-      --muted: #7a7469;
-      --accent: #c8a97e;
-      --accent2: #6b9e8a;
+      --bg: #f5f6fa;
+      --surface: #ffffff;
+      --surface2: #ecebfa;
+      --border: #d9dbe8;
+      --text: #14151f;
+      --muted: #5a5d73;
+      --accent: #0d8573;
+      --accent2: #b8975a;
       --serif: 'Playfair Display', Georgia, serif;
       --mono: 'DM Mono', 'Courier New', monospace;
     }
@@ -37,7 +38,7 @@
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; align-items: center; justify-content: space-between;
       padding: 1.4rem 3rem;
-      background: rgba(14,14,14,0.85);
+      background: rgba(245,246,250,0.88);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
@@ -103,7 +104,7 @@
     }
     .name-italic {
       font-style: italic;
-      color: var(--accent);
+      color: var(--accent2);
     }
     .tagline {
       font-family: var(--mono);
@@ -133,7 +134,7 @@
       border: none;
     }
     .btn-primary {
-      background: var(--accent);
+      background: var(--accent2);
       color: #0e0e0e;
     }
     .btn-primary:hover { background: #d9bea0; }
@@ -301,14 +302,12 @@
     <p class="eyebrow">Mechanical Engineering · Pre-Medical</p>
     <h1>Erik<br><span class="name-italic">Salamanca</span></h1>
     <p class="tagline">
-      Mechanical engineering student on a pre-med track, bridging the gap between
-      biomechanics, clinical science, and software. Building tools that live at the
-      intersection of engineering and medicine.
+      EDIT.
     </p>
     <div class="home-ctas">
       <!-- Both buttons now link to real pages -->
       <a href="projects.html" class="btn btn-primary">View Projects</a>
-      <a href="#resume" class="btn btn-outline">View Résumé</a>
+      <a href="#resume" class="btn btn-outline">View CV</a>
     </div>
   </div>
 
