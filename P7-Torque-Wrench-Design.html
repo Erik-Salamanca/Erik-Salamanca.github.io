@@ -1,0 +1,547 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['\\(', '\\)']],
+        displayMath: [['\\[', '\\]']]
+      }
+    };
+  </script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Torque Wrench Design Project — Erik Salamanca</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #f5f6fa;
+      --surface: #ffffff;
+      --surface2: #ecebfa;
+      --border: #d9dbe8;
+      --text: #14151f;
+      --muted: #5a5d73;
+      --accent: #2f5bea;
+      --accent2: #e0583f;
+      --serif: 'Playfair Display', Georgia, serif;
+      --mono: 'DM Mono', 'Courier New', monospace;
+      --max: 860px;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 14px;
+      line-height: 1.7;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.4rem 3rem;
+      background: rgba(245,246,250,0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+    .nav-back {
+      display: flex; align-items: center; gap: 0.5rem;
+      font-size: 0.72rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-back:hover { color: var(--accent); }
+    .nav-back::before { content: '←'; font-size: 0.9rem; }
+
+    /* HERO IMAGE */
+    .hero {
+      margin-top: 64px;
+      width: 100%;
+      aspect-ratio: 16 / 7;
+      overflow: hidden;
+      position: relative;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+    }
+    .hero img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      opacity: 0;
+      animation: fadeIn 0.8s 0.2s forwards;
+    }
+    .hero-placeholder {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 1rem;
+      color: var(--border);
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+    }
+    .hero-placeholder svg { opacity: 0.3; }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, transparent 50%, rgba(14,14,14,0.7) 100%);
+      pointer-events: none;
+    }
+
+    /* CONTENT WRAPPER */
+    .content {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 4rem 2rem 8rem;
+    }
+
+    /* PROJECT HEADER */
+    .proj-meta {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;
+      margin-bottom: 1.2rem;
+      opacity: 0; animation: fadeUp 0.5s 0.3s forwards;
+    }
+    .proj-tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      background: rgba(107,158,138,0.08);
+      border: 1px solid rgba(107,158,138,0.25);
+      padding: 0.2rem 0.6rem;
+    }
+    .proj-date {
+      font-size: 0.68rem;
+      color: var(--muted);
+      margin-left: auto;
+      letter-spacing: 0.05em;
+    }
+    .proj-title {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 1rem;
+      opacity: 0; animation: fadeUp 0.5s 0.4s forwards;
+    }
+    .proj-title em { font-style: italic; color: var(--accent); }
+    .proj-subtitle {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.8;
+      max-width: 620px;
+      margin-bottom: 2rem;
+      opacity: 0; animation: fadeUp 0.5s 0.5s forwards;
+    }
+
+    /* QUICK STATS ROW */
+    .proj-stats {
+      display: flex; flex-wrap: wrap; gap: 0;
+      border: 1px solid var(--border);
+      margin-bottom: 3.5rem;
+      opacity: 0; animation: fadeUp 0.5s 0.55s forwards;
+    }
+    .proj-stat {
+      flex: 1; min-width: 120px;
+      padding: 1rem 1.4rem;
+      border-right: 1px solid var(--border);
+    }
+    .proj-stat:last-child { border-right: none; }
+    .proj-stat-label {
+      font-size: 0.62rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.3rem;
+    }
+    .proj-stat-value {
+      font-family: var(--serif);
+      font-size: 1rem;
+      color: var(--accent);
+    }
+
+    /* DIVIDER */
+    .divider {
+      display: flex; align-items: center; gap: 1rem;
+      margin: 2.8rem 0 1.8rem;
+    }
+    .divider-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent2);
+      white-space: nowrap;
+    }
+    .divider-line { flex: 1; height: 1px; background: var(--border); }
+
+    /* BODY TEXT */
+    .proj-body p {
+      font-size: 0.88rem;
+      color: var(--muted);
+      line-height: 2;
+      margin-bottom: 1.4rem;
+      max-width: 680px;
+    }
+    .proj-body p strong { color: var(--text); font-weight: 500; }
+
+    /* SINGLE IMAGE */
+    .img-block {
+      margin: 2.5rem 0;
+      border: 1px solid var(--border);
+      overflow: hidden;
+      background: var(--surface);
+    }
+    .img-block img {
+      width: 100%; display: block;
+      object-fit: cover;
+      transition: transform 0.4s;
+    }
+    .img-block:hover img { transform: scale(1.015); }
+    .img-caption {
+      padding: 0.75rem 1rem;
+      font-size: 0.68rem;
+      color: var(--muted);
+      letter-spacing: 0.06em;
+      border-top: 1px solid var(--border);
+    }
+
+    /* TWO IMAGES SIDE BY SIDE */
+    .img-grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      margin: 2.5rem 0;
+      border: 1px solid var(--border);
+    }
+    .img-grid-2 .img-cell { background: var(--surface); overflow: hidden; }
+    .img-grid-2 .img-cell img {
+      width: 100%; display: block;
+      aspect-ratio: 4/3;
+      object-fit: cover;
+      transition: transform 0.4s;
+    }
+    .img-grid-2 .img-cell:hover img { transform: scale(1.02); }
+    .img-grid-2 .img-caption {
+      padding: 0.6rem 0.8rem;
+      font-size: 0.65rem;
+      color: var(--muted);
+      letter-spacing: 0.05em;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    /* THREE IMAGES IN A ROW */
+    .img-grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1px;
+      background: var(--border);
+      margin: 2.5rem 0;
+      border: 1px solid var(--border);
+    }
+    .img-grid-3 .img-cell { background: var(--surface); overflow: hidden; }
+    .img-grid-3 .img-cell img {
+      width: 100%; display: block;
+      aspect-ratio: 1;
+      object-fit: cover;
+      transition: transform 0.4s;
+    }
+    .img-grid-3 .img-cell:hover img { transform: scale(1.03); }
+
+    /* CALLOUT BOX */
+    .callout {
+      border-left: 3px solid var(--accent);
+      background: var(--surface);
+      padding: 1.2rem 1.6rem;
+      margin: 2rem 0;
+      font-size: 0.85rem;
+      color: var(--text);
+      line-height: 1.9;
+    }
+    .callout.green { border-left-color: var(--accent2); }
+
+    /* BULLET LIST */
+    .proj-list {
+      list-style: none;
+      margin: 0.5rem 0 1.8rem 0;
+      padding: 0;
+    }
+    .proj-list li {
+      position: relative;
+      padding: 0.35rem 0 0.35rem 1.4rem;
+      font-size: 0.84rem;
+      color: var(--muted);
+      line-height: 1.75;
+      border-bottom: 1px solid var(--border);
+    }
+    .proj-list li:first-child { border-top: 1px solid var(--border); }
+    .proj-list li::before {
+      content: '→';
+      position: absolute; left: 0;
+      color: var(--accent2);
+      font-size: 0.8rem;
+    }
+    .proj-list li strong { color: var(--text); }
+
+    /* CTA BUTTONS */
+    .proj-links {
+      display: flex; flex-wrap: wrap; gap: 0.8rem;
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.7rem 1.6rem;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: none;
+    }
+    .btn-primary { background: var(--accent); color: #0e0e0e; }
+    .btn-primary:hover { background: #d9bea0; }
+    .btn-outline {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+    }
+    .btn-outline:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 640px) {
+      nav { padding: 1.1rem 1.2rem; }
+      .content { padding: 2.5rem 1.2rem 5rem; }
+      .img-grid-2, .img-grid-3 { grid-template-columns: 1fr; }
+      .proj-stats { flex-direction: column; }
+      .proj-stat { border-right: none; border-bottom: 1px solid var(--border); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html">E·S</a>
+  <a class="nav-back" href="index.html">Back to Portfolio</a>
+</nav>
+
+<!-- HERO IMAGE
+     Replace src="../../assets/images/max_stress_high_mesh.png" with your actual image file.
+     Recommended size: 1600x700px, landscape.
+     The placeholder shows automatically if the image fails to load.
+-->
+<div class="hero">
+  <img src="../../assets/images/max_stress_high_mesh.png" alt="Project hero image"
+       onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+  <div class="hero-placeholder" style="display:none">
+    <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+      <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+      <path d="M21 15l-5-5L5 21"/>
+    </svg>
+    Hero Image — 1600 × 700px recommended
+  </div>
+  <div class="hero-overlay"></div>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="content">
+
+  <!-- HEADER: tags, title, subtitle -->
+  <div class="proj-meta">
+    <span class="proj-tag">CAD</span>
+    <span class="proj-tag">MATLAB</span>
+    <span class="proj-tag">ANSYS</span>
+    <!-- TODO: fill in the date -->
+    <span class="proj-date">Month Year</span>
+  </div>
+
+  <h1 class="proj-title">Torque Wrench <em>Design Project</em></h1>
+
+  <p class="proj-subtitle">
+    Design Project
+  </p>
+
+  <div class="proj-body">
+    <p>
+      In this project for MAE 3270 Properties of Materials, Kat Volkova and I designed a torque wrench given requirements for use. These requirements were that it must have a factor of safety against yield of 4, against crack growth of 2, and against fatigue stress at 10<sup>6</sup> cycles of 1.5. All of these factors of safety were based on loading of 600 lbf-in. Additionally, a strain gauge would be attached to the side of the wrench and it must measure a voltage change of 1.0 mV/V at the rated torque of 600 lbf-in. Finally the wrench must be made of either aluminum, steel, or titanium.
+    </p>
+  </div>
+
+  <div class="divider"><span class="divider-label">Overall Model Dimensions</span><div class="divider-line"></div></div>
+
+  <!-- IMAGE SPOT: put dimensions_2.png here -->
+  <div class="img-block">
+    <img src="../../assets/images/dimensions_2.png" alt="Overall dimensions of the wrench design"
+         onerror="this.style.height='180px'; this.style.background='#161616';" />
+    <div class="img-caption">This image depicts the overall dimensions of the wrench design. This model was made by Kat.</div>
+  </div>
+
+  <div class="divider"><span class="divider-label">Using MATLAB to do hand calculations</span><div class="divider-line"></div></div>
+
+  <div class="proj-body">
+    <p>
+      After making the model of the system I developed a MATLAB livescript to do hand calculations to see if certain materials would meet the requirements set by the problem. I have attached the MATLAB file here; it has the correct dimensions and material we selected in it.
+    </p>
+    <p>
+      <a href="../../assets/Erik_Salamanca_Material_Selector_For_Torque_Wrench.mlx" style="color: var(--accent);">Download MATLAB livescript here</a>
+    </p>
+    <!-- FLOW: the sentence below says "we" picked the material, but the surrounding text switches between "I" and "we". -->
+    <p>
+      Using this script we picked Aluminum 7075 T6 which has the relevant material properties:
+    </p>
+  </div>
+
+  <ul class="proj-list">
+    <li>E = 10000000 psi</li>
+    <li>nu = 0.325</li>
+    <li>Yield Stress = 72300 psi</li>
+    <li>KIC = 424200 psi</li>
+    <li>Fatigue Stress at 10<sup>6</sup> cycles = 26000 psi</li>
+  </ul>
+
+  <div class="divider"><span class="divider-label">Using ANSYS to do finite element modeling</span><div class="divider-line"></div></div>
+
+  <div class="proj-body">
+    <p>
+      Having a material that would work based on our hand calculations we imported our CAD model into ANSYS to do finite element modeling.
+    </p>
+  </div>
+
+  <!-- IMAGE SPOT: put loading.png here -->
+  <div class="img-block">
+    <img src="../../assets/images/loading.png" alt="Torque wrench loading setup in ANSYS"
+         onerror="this.style.height='180px'; this.style.background='#161616';" />
+    <div class="img-caption">How the torque wrench was loaded in ANSYS to do the FEM.</div>
+  </div>
+
+  <div class="proj-body">
+    <p>
+      From this model we could generate the strain contours and find what the strain would be in the strain gauge direction.
+    </p>
+  </div>
+
+  <!-- IMAGE SPOT: put Normal_strain_contours.png here -->
+  <div class="img-block">
+    <img src="../../assets/images/Normal_strain_contours.png" alt="Normal strain contours in ANSYS"
+         onerror="this.style.height='180px'; this.style.background='#161616';" />
+    <div class="img-caption">An image of the normal strain contours in ANSYS.</div>
+  </div>
+
+  <div class="proj-body">
+    <!-- FLOW: "Using these values we can again verify..." but no strain values or resulting voltage are ever stated, and epsilon_1 / epsilon_2 are not defined. -->
+    <p>
+      Using these values we can again verify that our material and design meet the requirement for the strain gauge to have a high enough voltage change to be measurable by the equation:
+    </p>
+
+    \[
+    \frac{V_{out}}{V_{IN}} = \frac{k(\epsilon_1 + \epsilon_2)}{4}
+    \]
+
+    <p>
+      Where k = 2
+    </p>
+    <p>
+      We also used ANSYS to generate the stress contours and found the maximum stress.
+    </p>
+  </div>
+
+  <!-- IMAGE SPOT: put max_stress.png here -->
+  <div class="img-block">
+    <img src="../../assets/images/max_stress.png" alt="Relevant area of stress contours on the wrench"
+         onerror="this.style.height='180px'; this.style.background='#161616';" />
+    <div class="img-caption">This is the relevant area of stress contours on the wrench.</div>
+  </div>
+
+  <div class="proj-body">
+    <!-- FLOW: the maximum stress value is never given here; the paragraph jumps straight to factor of safety. Also "a stress concentration that did not meet the factor of safety requirement" mixes two ideas (the stress concentration vs. the resulting factor of safety). -->
+    <p>
+      This model showed us that there actually was a stress concentration higher than what we had predicted in the hand calculations. When we first put the mesh on we had the mesh size set to 0.06 around the filleted area. This gave a stress concentration that did not meet the factor of safety requirement, only being 3.54. However, when the mesh size was increased to 0.1 the factor of safety became 4.03 which meets the design requirement.
+    </p>
+  </div>
+
+  <div class="img-grid-2">
+    <div class="img-cell">
+      <!-- IMAGE SPOT: put max_stress_high_mesh.png here -->
+      <img src="../../assets/images/max_stress_high_mesh.png" alt="Stress contours with mesh set at 0.06"
+           onerror="this.style.height='200px'; this.style.background='#1e1e1e';" />
+      <div class="img-caption">The mesh set at 0.06.</div>
+    </div>
+    <div class="img-cell">
+      <!-- IMAGE SPOT: put max_stress_low_mesh.png here -->
+      <img src="../../assets/images/max_stress_low_mesh.png" alt="Stress contours with mesh set at 0.1"
+           onerror="this.style.height='200px'; this.style.background='#1e1e1e';" />
+      <div class="img-caption">The mesh set at 0.1.</div>
+    </div>
+  </div>
+
+  <!-- FLOW: this NOTE interrupts the mesh discussion; the next paragraph continues the explanation of the mesh results, so it may read better after that paragraph. -->
+  <div class="callout">
+    NOTE: The images show maxes in different spots than where we are saying the max is, but those are due to how the modeling system works with the CAD model’s extrusion interactions.
+  </div>
+
+  <div class="proj-body">
+    <p>
+      The reason that the stress is higher in the mesh that is smaller is because the small meshes exacerbate the stress concentration at the fillet. By increasing the mesh by a bit we get a more accurate understanding of how the stress concentration is actually affecting the wrench.
+    </p>
+    <p>
+      We also wanted to do a visualization of the maximum deflection to make sure at the maximum rated load the wrench was not ridiculously bent. It would also allow us to compare our hand calculations to what ANSYS predicts the max deflection should be.
+    </p>
+  </div>
+
+  <!-- IMAGE SPOT: put max_deflection.png here -->
+  <div class="img-block">
+    <img src="../../assets/images/max_deflection.png" alt="Maximum deflection of the wrench at rated torque"
+         onerror="this.style.height='180px'; this.style.background='#161616';" />
+    <div class="img-caption">The maximum deflection of the wrench at the rated torque of 600 lbf-in.</div>
+  </div>
+
+  <div class="proj-body">
+    <!-- FLOW: the hand-calculated deflection is never presented earlier, so this comparison has nothing to refer back to. -->
+    <p>
+      The max deflection that ANSYS predicts is actually higher than what our hand calculations do. This makes sense as our calculations do not take into account shear energy or other factors while ANSYS does.
+    </p>
+  </div>
+
+  <div class="divider"><span class="divider-label">Strain Gauge Selection</span><div class="divider-line"></div></div>
+
+  <div class="proj-body">
+    <p>
+      The final thing that I did is pick a strain gauge that would fit on our design and work with our material. I wanted a half bridge strain gauge as that was what the calculations were based on. This narrowed down the search a lot and I ended up going with a half bridge uniaxial strain gauge model number SGT-1LH/350-TY13. I have linked the documentation below.
+    </p>
+    <!-- FLOW/PATH: this link uses ../assets/ while the other links use ../../assets/ — check which is correct. -->
+    <p>
+      <a href="../assets/SGT_HALF-BRIDGE-UNIAXIAL.pdf" style="color: var(--accent);">Strain gauge documentation file</a>
+    </p>
+  </div>
+
+</div><!-- end .content -->
+
+</body>
+</html>
